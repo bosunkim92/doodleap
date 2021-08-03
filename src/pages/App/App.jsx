@@ -30,17 +30,15 @@ function App() {
           <Route exact path="/signup">
              <SignupPage handleSignUpOrLogin={handleSignUpOrLogin}/>
           </Route>
-          {userService.getUser() ? 
-            <> 
+          {userService.getUser() ? (
              <Switch>
                 <Route exact path="/">
                     Home PAGE COMPONENT WOULD GO HEREE
                 </Route>
             </Switch>
-            </>
-            :
+           ) : (
             <Redirect to='/login'/>
-          }
+           )}
   
       </Switch>
     </div>

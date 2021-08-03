@@ -9,7 +9,7 @@ import {Button, Form, Grid, Header, Segment } from 'semantic-ui-react'
 
 export default function SignUpPage(props){
 
-    const [error, setError] = userState('')
+    const [error, setError] = useState('')
     const [state, setState] = useState({
         username: '',
         email: '',
@@ -28,18 +28,20 @@ export default function SignUpPage(props){
 
     async function handleSubmit(e){
         e.preventDefault();
+        
+        // const formData = new FormData();
+        // console.log(formData)
 
-        const formData = new FormData();
-
-        for (let key in state) {
-            formData.append(key, state[key])
-        }
+        // for (let key in state) {
+        //     formData.append(key, state[key])
+        // }
 
         try{
-            await userService.signup(formData);
+            await userService.signup(state);
             props.handleSignUpOrLogin()
             history.push('/')
         } catch(err) {
+            console.log('handleSubmit error has occured');
             console.log(err.message)
             setError(err.message)
         }
@@ -47,7 +49,7 @@ export default function SignUpPage(props){
  
     
     return (
-      <> 
+
         <Grid textAlign='center' style={{height:'100vh'}} verticalAlign='middle'>
             <Grid.Column style={{maxWidth: 300 }}>
                 <Header as='h2' color='#a30f4d' textAlign='center'>
@@ -59,6 +61,14 @@ export default function SignUpPage(props){
                             name="username"
                             placeholder='User Name'
                             value={state.username}
+                            onChange={handleChange}
+                            required
+                        />
+                        <Form.Input
+                            name="email"
+                            type="email"
+                            placeholder='email'
+                            value={state.email}
                             onChange={handleChange}
                             required
                         />
@@ -87,7 +97,7 @@ export default function SignUpPage(props){
                 </Form>
             </Grid.Column>
         </Grid>        
-      </>
+
       );   
     
 }

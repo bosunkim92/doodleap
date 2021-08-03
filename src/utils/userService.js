@@ -5,10 +5,17 @@ const BASE_URL = '/api/users/';
 
 // NOTE THIS IS configured to send of a multi/part form request
 // aka photo 
-function signup(user) {
+function signup(data) {
+  console.log('signup function from the uerService.js is firing')
+  console.log(data);
+  console.log('this is user');
   return fetch(BASE_URL + 'signup', {
     method: 'POST',
-    body: user
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
   })
   .then(res => {
     if (res.ok) return res.json();

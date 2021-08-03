@@ -4,6 +4,7 @@ import ErrorMessage from '../../components/ErrorMessage/ErrorMessage'
 import userService from '../../utils/userService';
 import {Button, Form, Grid, Header, Message, Segment} from 'semantic-ui-react';
 import { useHistory } from 'react-router';
+import { Link } from 'react-router-dom';
 
 export default function LoginPage(props){
     const [error, setError] = useState("");
@@ -34,7 +35,6 @@ export default function LoginPage(props){
     }
 
     return (
-      <> 
         <Grid textAlign='center' style={{height:'100vh'}} verticalAlign="middle">
             <Grid.Column style={{maxWidth: 300}}>
                 <Header as='h2' color="#a30f4d" textAlign='center'>
@@ -73,7 +73,6 @@ export default function LoginPage(props){
                 {error ? <ErrorMessage error={error} /> : null}
             </Grid.Column>
         </Grid>
-      </>
       );
 }
 
