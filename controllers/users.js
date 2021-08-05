@@ -1,4 +1,5 @@
 const User = require('../models/user');
+const Post = require('../models/post');
 const jwt = require('jsonwebtoken');
 const SECRET = process.env.SECRET;
 const { v4: uuidv4 } = require('uuid');
@@ -10,25 +11,14 @@ const BUCKET_NAME= process.env.AWS_BUCKET
 
 module.exports = {
   signup,
-  login
+  login,
+  profile,
+  update
 };
 
 async function signup(req, res) {
   console.log(req.body)
   console.log('this is from users controller signup function')
-
-  //////////////////////////////////////////////////////////////////////////////////
-  //////////////////////////////////////////////////////////////////////////////////
-  //////////////////////////////////////////////////////////////////////////////////
-
-  // FilePath unique name to be saved to our butckt
-  // const filePath = `${uuidv4()}/${req.file.originalname}`
-  //  const params = {Bucket: BUCKET_NAME};
-  //your bucket name goes where collectorcat is 
-  //////////////////////////////////////////////////////////////////////////////////
-  // s3.upload(params, async function(err, data){
-    // console.log(data, 'from aws') // data.Location is our photoUrl that exists on aws
-    // const user = new User({...req.body, photoUrl: data.Location});
 
     const user = new User({...req.body});
     try {
@@ -60,6 +50,52 @@ async function login(req, res) {
     return res.status(401).json(err);
   }
 }
+
+async function profile(req, res){
+  console.log(req.params)
+  try {
+    const user = await User.findOne({username: req.params.username})
+    if(!user) res.status(404).json({message: 'bad parameters'})
+
+    const posts = await Post.find({user: user._id})
+    res.status(200).json({posts: posts, user: user}) 
+  } catch (err) {
+    console.log(err)
+    res.json({err})
+  }
+}
+
+async function update(req, res){
+  console.log(req.body, req.file)
+
+    try {
+      const user = await User.findOne({username: req.params.username});
+      if(!user) return res.status(404).json({message: 'Bad Parameters'});
+
+      console.log(user);
+      console.log('this is user; expecting to include user object');
+
+      const filePath=`${uuidv4()}/${req.file.originalname}`
+      const params = {Bucket: BUCKET_NAME, Key: filePath, Body: req.file.buffer};
+
+      s3.upload(params, async function(err, data){
+        if(err) {
+          console.log(err);
+          res.json({data: err});
+        }
+        console.log(data, 'from aws')
+        user.content = req.body.content;
+        user.photoUrl = data.Location;
+        user.save(function(err){
+          if (err){
+            console.log(err);
+          }
+        })
+      })
+    } catch (err) {
+      console.log(err);
+    }
+} 
 
 
 /*----- Helper Functions -----*/

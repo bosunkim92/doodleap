@@ -37,7 +37,7 @@ export default function LoginPage(props){
     return (
         <Grid textAlign='center' style={{height:'100vh'}} verticalAlign="middle">
             <Grid.Column style={{maxWidth: 300}}>
-                <Header as='h2' color="#a30f4d" textAlign='center'>
+                <Header as='h2' color="teal" textAlign='center'>
                     Log-In to Your Account
                 </Header>
                 <Form autoComplete='off' onSubmit={handleSubmit}>

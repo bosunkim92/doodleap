@@ -17,3 +17,5 @@ const postSchema = new mongoose.Schema({
     likes: [likesSchema],
     inspiring: [inspiringSchema],
 })
+
+module.exports = mongoose.model('Post', postSchema);

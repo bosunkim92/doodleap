@@ -3,7 +3,10 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 import './App.css';
 import SignupPage from '../SignupPage/SignupPage';
 import LoginPage from '../LoginPage/LoginPage';
-import userService from '../../utils/userService'
+import userService from '../../utils/userService';
+import HomePage from '../HomePage/HomePage';
+import ArtFeedPage from '../ArtFeedPage/ArtFeedPage';
+import ProfilePage from "../ProfilePage/ProfilePage"
 
 
 function App() {
@@ -33,13 +36,18 @@ function App() {
           {userService.getUser() ? (
              <Switch>
                 <Route exact path="/">
-                    Home PAGE COMPONENT WOULD GO HEREE
+                    <HomePage/>
+                </Route>
+                <Route exact path="/art_feed">
+                  <ArtFeedPage user={user}/>
+                </Route>
+                <Route path="/:username">
+                  <ProfilePage user={user}/>
                 </Route>
             </Switch>
            ) : (
             <Redirect to='/login'/>
            )}
-  
       </Switch>
     </div>
   );

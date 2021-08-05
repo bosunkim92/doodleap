@@ -62,10 +62,26 @@ function getProfile(username){
     throw new Error('Bad Credentials')
   })
 }
+
+
+function updateProfile(username){
+  return fetch(BASE_URL + username, {
+    method: 'PUT',
+    body: username,
+    headers: {
+      'Authorization': 'Bearer ' + tokenService.getToken()
+    }
+  }).then(res => {
+    if (res.ok) return res.json();
+    throw new Error('Update Failed');
+  });
+}
+
 export default {
   signup, 
   logout,
   login,
   getUser,
-  getProfile
+  getProfile,
+  updateProfile
 };
