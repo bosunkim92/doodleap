@@ -7,7 +7,7 @@ import userService from '../../utils/userService';
 import HomePage from '../HomePage/HomePage';
 import ArtFeedPage from '../ArtFeedPage/ArtFeedPage';
 import ProfilePage from "../ProfilePage/ProfilePage"
-
+import Post from "../Post/Post";
 
 function App() {
 
@@ -41,8 +41,11 @@ function App() {
                 <Route exact path="/art_feed">
                   <ArtFeedPage user={user}/>
                 </Route>
-                <Route path="/:username">
+                <Route path="/username/:username">
                   <ProfilePage user={user}/>
+                </Route>
+                <Route path="/posts/:id">
+                  <Post user={user}/>
                 </Route>
             </Switch>
            ) : (

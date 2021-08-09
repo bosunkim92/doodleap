@@ -6,9 +6,6 @@ const BASE_URL = '/api/users/';
 // NOTE THIS IS configured to send of a multi/part form request
 // aka photo 
 function signup(data) {
-  console.log('signup function from the uerService.js is firing')
-  console.log(data);
-  console.log('this is user');
   return fetch(BASE_URL + 'signup', {
     method: 'POST',
     headers: {
@@ -53,7 +50,7 @@ function login(creds) {
 }
 
 function getProfile(username){
-  return fetch(BASE_URL + username, {
+  return fetch(`${BASE_URL}username/` + username, {
     headers: {
       'Authorization': 'Bearer ' + tokenService.getToken()
     }
@@ -63,11 +60,12 @@ function getProfile(username){
   })
 }
 
-
-function updateProfile(username){
-  return fetch(BASE_URL + username, {
+function updateProfile(user, data){
+  console.log(user.username);
+  console.log(data);
+  return fetch(`${BASE_URL}username/` + user.username, {
     method: 'PUT',
-    body: username,
+    body: data,
     headers: {
       'Authorization': 'Bearer ' + tokenService.getToken()
     }

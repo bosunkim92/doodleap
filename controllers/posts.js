@@ -9,6 +9,9 @@ const BUCKET_NAME = process.env.AWS_BUCKET;
 module.exports = {
     create,
     index,
+    show,
+    update,
+    delete: deletePost,
 }
 
 function create(req, res) {
@@ -46,5 +49,38 @@ async function index(req, res) {
         res.status(200).json({ posts });
     } catch (err) {
         console.log("something went wrong while loading page")
+    }
+}
+
+async function show(req, res) {
+    try {
+        const post = await Post.findOne({_id: req.params.id}).populate("user").exec();
+        res.status(200).json({ post });
+    } catch (err) {
+        console.log("show individual post failed");
+    }
+}
+
+async function update(req, res) {
+    console.log("update function from the posts.js controller is firing")
+    console.log(req, " this is req")
+    console.log(req.body, "this is update req.body");
+    try{
+        const post = await Post.findOne({_id:req.params.id}).populate("user").exec();
+        post.content = req.body.content;
+        post.save();
+    } catch(err) {
+        console.log(err);
+        res.json({ err })
+    }
+}
+
+async function deletePost(req, res) {
+    try{
+        const post = await Post.findOne({_id:req.params.id});
+        post.remove(req.params.id);
+        res.json({data: 'deleted'})
+    } catch(err) {
+        res.json({error: err})
     }
 }

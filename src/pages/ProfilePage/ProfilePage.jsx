@@ -1,9 +1,11 @@
 import React, {useState, useEffect} from 'react';
-import {Grid, Loader} from 'semantic-ui-react';
+import {Grid, Loader, Segment, Dimmer, Image} from 'semantic-ui-react';
 import userService from "../../utils/userService";
 import ProfileBio from "../../components/ProfileBio/ProfileBio";
 import PostFeed from "../../components/PostFeed/PostFeed";
 import {useParams} from "react-router-dom";
+import * as likesAPI from "../../utils/likesAPI";
+import * as inspiringAPI from "../../utils/inspiringAPI";
 
 
     // profile page will have user's posts and bio info;
@@ -16,29 +18,62 @@ export default function ProfilePage({ user }) {
     const [error, setError] = useState("");
 
     const {username} = useParams();
-
+ 
     async function getProfile() {
         try{
             const data = await userService.getProfile(username);
             console.log(data, " data");
 
-            setLoading(() => false);
             setPosts(() => [...data.posts]);
             setProfileUser(() => data.user);
+            setLoading(() => false);
         } catch (err) {
             console.log(err);
             setError("No profile");
         }
     }
+
+    async function addLike(postId) {
+        console.log(postId);
+        try {
+          const data = await likesAPI.create(postId);
+          console.log(data, " this is from addLike");
+          getProfile();
+        } catch (err) {
+          console.log(err);
+        }
+      }
     
-    async function handleEditProfile(update) {
-        setLoading(true)
-        const data = await userService.updateProfile(update);
-        console.log(data, " data var");
-        setProfileUser(() => data.user);
-        setLoading(false);
+    async function removeLike(likeID) {
+        try {
+            const data = await likesAPI.removeLike(likeID);
+            getProfile();
+        } catch (err) {
+            console.log(err);
+        }
     }
+
+
+    async function addInspiring(postId) {
+        console.log(postId);
+        try {
+          const data = await inspiringAPI.create(postId);
+          console.log(data, " this is from addInspiring");
+          getProfile();
+        } catch (err) {
+          console.log(err);
+        }
+      }
     
+    async function removeInspiring(inspiringID) {
+        try {
+            const data = await inspiringAPI.removeInspiring(inspiringID);
+            getProfile();
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
     useEffect(()=> {
         getProfile();
     }, []);
@@ -49,44 +84,50 @@ export default function ProfilePage({ user }) {
         )
     }
 
-    if(loading){
+    if (loading) {
         return (
-            <Grid
-                textAlign="center"
-                style={{height: "100vh" }}
-                verticalAlign="middle"
-            >
-                <Grid.Column style={{ maxWidth:300 }}>
-                    <Loader size="large" active>
-                        Loading
-                    </Loader>
-                </Grid.Column>
-            </Grid>
+          <Grid
+            textAlign="center"
+            style={{ height: "100vh" }}
+            verticalAlign="middle"
+          >
+            <Grid.Column style={{ maxWidth: 450 }}>
+              <Loader size="large" active>
+                Loading
+              </Loader>
+            </Grid.Column>
+          </Grid>
         );
-    }
+      }
 
     return (
-        <Grid>
-            <Grid.Row>
-                <Grid.Column>
-                    <h1>Nav bar will be here</h1>
-                </Grid.Column>
-            </Grid.Row>
-            <Grid.Row>
-                <Grid.Column>
-                    <ProfileBio user={profileUser} handleEditProfile={handleEditProfile}/>
-                </Grid.Column>
-            </Grid.Row>
-            <Grid.Row centered>
-                <Grid.Column style={{ maxWidth: 300 }}>
-                    <PostFeed
-                        isProfile={true}
-                        posts={posts}
-                        numPhotosCol={3}
-                        user={user}
-                    />
-                </Grid.Column>
-            </Grid.Row>
+        <Grid> 
+                <Grid.Row>
+                    <Grid.Column>
+                        <h1>Nav bar will be here</h1>
+                    </Grid.Column>
+                </Grid.Row>
+                <Grid.Row>
+                    <Grid.Column>
+
+                        <ProfileBio user={profileUser}/>
+
+                    </Grid.Column>
+                </Grid.Row>
+                <Grid.Row centered>
+                    <Grid.Column style={{ maxWidth: 300 }}>
+                        <PostFeed
+                            isProfile={true}
+                            posts={posts}
+                            numPhotosCol={3}
+                            addLike={addLike}
+                            removeLike={removeLike}
+                            addInspiring={addInspiring}
+                            removeInspiring={removeInspiring}
+                            user={user}
+                        />
+                    </Grid.Column>
+                </Grid.Row> 
         </Grid>
     )
 }

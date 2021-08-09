@@ -7,9 +7,15 @@ export default function PostFeed({
     numPhotosCol,
     isProfile,
     loading,
+    addLike,
+    removeLike,
+    addInspiring,
+    removeInspiring,
+    isPostView,
     user
 }) {
     return (
+
         <Card.Group itemsPerRow={numPhotosCol} stackable>
             {loading ? (
                 <Segment>
@@ -25,10 +31,16 @@ export default function PostFeed({
                         post={post}
                         key={post._id}
                         isProfile={isProfile}
+                        addLike={addLike}
+                        removeLike={removeLike}
+                        addInspiring={addInspiring}
+                        removeInspiring={removeInspiring}
                         user={user}
+                        isPostView={isPostView}
                     />
                 );
             })}
         </Card.Group>
+
     );
 }

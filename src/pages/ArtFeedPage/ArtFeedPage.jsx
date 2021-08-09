@@ -1,8 +1,10 @@
 import React, {useEffect, useState} from 'react'
-import { Grid } from 'semantic-ui-react';
-import PostFeed from "../../components/PostFeed/PostFeed"
-import * as postsAPI from '../../utils/postsAPI'
 import AddPostForm from "../../components/AddPostForm/AddPostForm";
+import PostFeed from "../../components/PostFeed/PostFeed"
+import { Grid } from 'semantic-ui-react';
+import * as postsAPI from '../../utils/postsAPI';
+import * as likesAPI from '../../utils/likesAPI';
+import * as inspiringAPI from '../../utils/inspiringAPI';
 
 export default function ArtFeedPage({user}) {
     //ArtFeed page will have sections of the art for sketch, paint, pixel art, drawings
@@ -28,6 +30,49 @@ export default function ArtFeedPage({user}) {
         }
     }
 
+
+    async function addLike(postId) {
+        console.log(postId);
+        try {
+          const data = await likesAPI.create(postId);
+          console.log(data, " this is from addLike");
+          getPosts();
+        } catch (err) {
+          console.log(err);
+        }
+      }
+    
+    async function removeLike(likeID) {
+        try {
+            const data = await likesAPI.removeLike(likeID);
+            getPosts();
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    async function addInspiring(postId) {
+        console.log(postId);
+        try {
+          const data = await inspiringAPI.create(postId);
+          console.log(data, " this is from addInspiring");
+          getPosts();
+        } catch (err) {
+          console.log(err);
+        }
+      }
+    
+    async function removeInspiring(inspiringID) {
+        try {
+            const data = await inspiringAPI.removeInspiring(inspiringID);
+            getPosts();
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+
+
     useEffect(() => {
         getPosts();
     }, []);
@@ -51,6 +96,11 @@ export default function ArtFeedPage({user}) {
                         numPhotosCol={1}
                         loading={loading}
                         isProfile={false}
+                        addLike={addLike}
+                        removeLike={removeLike}
+                        addInspiring={addInspiring}
+                        removeInspiring={removeInspiring}
+                        isPostView={false}
                         user={user}
                     />
                 </Grid.Column>

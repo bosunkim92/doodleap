@@ -21,6 +21,7 @@ async function signup(req, res) {
   console.log('this is from users controller signup function')
 
     const user = new User({...req.body});
+    user.photoUrl.push({photoUrl:"https://react.semantic-ui.com/images/wireframe/square-image.png"})
     try {
       await user.save();
       const token = createJWT(user); // user is the payload so this is the object in our jwt
@@ -67,7 +68,6 @@ async function profile(req, res){
 
 async function update(req, res){
   console.log(req.body, req.file)
-
     try {
       const user = await User.findOne({username: req.params.username});
       if(!user) return res.status(404).json({message: 'Bad Parameters'});
@@ -84,14 +84,16 @@ async function update(req, res){
           res.json({data: err});
         }
         console.log(data, 'from aws')
-        user.content = req.body.content;
-        user.photoUrl = data.Location;
-        user.save(function(err){
+        user.bio = req.body.bio;
+        await user.photoUrl.unshift({photoUrl:data.Location, userId:user._id});
+        console.log(user.photoUrl.photoUrl);
+        await user.save(function(err){
           if (err){
             console.log(err);
           }
         })
       })
+      res.status(200).json({user: user}) 
     } catch (err) {
       console.log(err);
     }
