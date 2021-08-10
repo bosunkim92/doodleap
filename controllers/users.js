@@ -54,6 +54,7 @@ async function login(req, res) {
 
 async function profile(req, res){
   console.log(req.params)
+  console.log('this is req.params from profile')
   try {
     const user = await User.findOne({username: req.params.username})
     if(!user) res.status(404).json({message: 'bad parameters'})
@@ -87,11 +88,7 @@ async function update(req, res){
         user.bio = req.body.bio;
         await user.photoUrl.unshift({photoUrl:data.Location, userId:user._id});
         console.log(user.photoUrl.photoUrl);
-        await user.save(function(err){
-          if (err){
-            console.log(err);
-          }
-        })
+        await user.save();
       })
       res.status(200).json({user: user}) 
     } catch (err) {

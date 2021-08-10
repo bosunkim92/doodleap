@@ -1,9 +1,10 @@
 import React, {useState} from 'react';
-import { Card, Icon, Image, Grid } from "semantic-ui-react";
+import { Card, Icon, Image, Grid, Segment, Dimmer, Loader } from "semantic-ui-react";
 import {Link} from 'react-router-dom';
 import * as postsAPI from "../../utils/postsAPI";
 import EditPostForm from "../EditPostForm/EditPostForm";
 import Comment from '../Comment/Comment';
+import PostContent from "../PostContent/PostContent"
 
 
 export default function PostCard({
@@ -18,6 +19,7 @@ export default function PostCard({
     editPost,
     deletePost,
     loading,
+    contentLoading,
     handleAddComment,
     editComment,
     deleteComment,
@@ -46,14 +48,17 @@ export default function PostCard({
 
 
     return (
-
+        <>
 
         <Card key={post._id}>
+
             {isProfile ? (
                 ""
             ) : (
                 <>
                     <Card.Content textAlign="left">
+                        
+                    <Link to={`/username/${user.username}`}>
                         <Image
                             floated='left'
                             size='large'
@@ -61,6 +66,7 @@ export default function PostCard({
                             src={post.user.photoUrl[0].photoUrl}
                             />
                         <Card.Header floated="right">{post.user.username}</Card.Header>
+                    </Link>
                             {isPostView ? (
                                 <>
                                 {user.username === post.user.username ? (
@@ -82,23 +88,23 @@ export default function PostCard({
             {isPostView ? (
                 <>
                     <Image src={`${post.photoUrl}`} wrapped ui={false}/>
-
-                    {showEditForm === false ? (
-
-                        <Card.Content>
-                            <Card.Description>{post.content}</Card.Description>
-                        </Card.Content>
-
-                    ) : (
-                        <EditPostForm post={post} editPost={editPost}/>
-                    )}
+                    {
+                        contentLoading ? (
+                        <Segment>
+                            <Dimmer active inverted>
+                                <Loader size='small'>Loading</Loader>
+                            </Dimmer>
+                            <Image src="https://react.semantic-ui.com/images/wireframe/short-paragraph.png"/>
+                        </Segment>
+                        ):(
+                            <PostContent post={post} showEditForm={showEditForm} editPost={editPost}/>
+                        )
+                    }
                 </>
             ) : (
                 <Link to={`/posts/${post._id}`}>
                     <Image src={`${post.photoUrl}`} wrapped ui={true}/>
-                    <Card.Content>
-                        <Card.Description>{post.content}</Card.Description>
-                    </Card.Content>
+                    <PostContent post={post}/>
                 </Link>
             )}
 
@@ -121,11 +127,12 @@ export default function PostCard({
 
 
             {isPostView ? (
-                <Card.Content>
-                    <Comment post={post} loading={loading} handleAddComment={handleAddComment} editComment={editComment} deleteComment={deleteComment}/>
-                </Card.Content>
+
+                    <Comment post={post} user={user} loading={loading} handleAddComment={handleAddComment} editComment={editComment} deleteComment={deleteComment}/>
+
             ) : ("")}
 
         </Card>
+        </>
     )
 }

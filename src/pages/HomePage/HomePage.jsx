@@ -1,20 +1,24 @@
 import React from 'react'
+import NavBar from "../../components/NavBar/NavBar";
+import HallOfFame from "../../components/HallOfFame/HallOfFame";
+import {Icon} from "semantic-ui-react"
+import {Link} from "react-router-dom";
 
-export default function HomePage(){
-    //Home page will have Logo, overview of the newly added art work
-    //Nav bar for profile, ArtFeed, Hall of Fame
+export default function HomePage({user, handleLogout}){
+
+
 
     return (
         <>
-            <div>Home page will have Header which is nav component
-                <p>nav left will have feed</p>
-                <p>and Hall of fame</p>
-                
-                <p>nav right will be profile</p>
-                <p>and log in or out</p>
-            </div>
-            <div>Main component will show slide of inspiring pictures
-                <h3>underneath of main slide show, may have hash tag of words that directs to the post,,?</h3>
+            <NavBar user={user} handleLogout={handleLogout}/>
+            <HallOfFame user={user} />
+            <div>
+                <h3>Click&nbsp;
+                    <span>&nbsp;<Link to="/art_feed"><Icon name="paint brush"></Icon></Link></span>
+                    to check out more of
+                    <br/>
+                    awesome art works!
+                </h3>
             </div>
         </>
     )

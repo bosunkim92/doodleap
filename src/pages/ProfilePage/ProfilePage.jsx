@@ -3,6 +3,7 @@ import {Grid, Loader, Segment, Dimmer, Image} from 'semantic-ui-react';
 import userService from "../../utils/userService";
 import ProfileBio from "../../components/ProfileBio/ProfileBio";
 import PostFeed from "../../components/PostFeed/PostFeed";
+import NavBar from "../../components/NavBar/NavBar";
 import {useParams} from "react-router-dom";
 import * as likesAPI from "../../utils/likesAPI";
 import * as inspiringAPI from "../../utils/inspiringAPI";
@@ -11,7 +12,7 @@ import * as inspiringAPI from "../../utils/inspiringAPI";
     // profile page will have user's posts and bio info;
     // if the user is the profile owner, then the page will show buttons for edit profile and post, as well as delete posts.
 
-export default function ProfilePage({ user }) {
+export default function ProfilePage({ user, handleLogout, handleProfileUpdate }) {
     const [posts, setPosts] = useState([]);
     const [profileUser, setProfileUser] = useState({});
     const [loading, setLoading] = useState(true);
@@ -74,6 +75,18 @@ export default function ProfilePage({ user }) {
         }
     }
 
+    async function editProfile(user, data){
+        try{
+            setLoading(true);
+            await userService.updateProfile(user, data);
+            setLoading(false);
+            handleProfileUpdate();
+        } catch(err) {
+            console.log(err);
+        }
+    }
+
+
     useEffect(()=> {
         getProfile();
     }, []);
@@ -101,33 +114,33 @@ export default function ProfilePage({ user }) {
       }
 
     return (
-        <Grid> 
-                <Grid.Row>
-                    <Grid.Column>
-                        <h1>Nav bar will be here</h1>
-                    </Grid.Column>
-                </Grid.Row>
-                <Grid.Row>
-                    <Grid.Column>
+        <>
+        <NavBar user={user} handleLogout={handleLogout}/>
+        { loading ? ("") :(
+            <Grid key={profileUser._id}> 
+                    <Grid.Row>
+                        <Grid.Column>
 
-                        <ProfileBio user={profileUser}/>
+                            <ProfileBio profileUser={profileUser} key={profileUser._id} user={user} editProfile={editProfile} loading={loading}/>
 
-                    </Grid.Column>
-                </Grid.Row>
-                <Grid.Row centered>
-                    <Grid.Column style={{ maxWidth: 300 }}>
-                        <PostFeed
-                            isProfile={true}
-                            posts={posts}
-                            numPhotosCol={3}
-                            addLike={addLike}
-                            removeLike={removeLike}
-                            addInspiring={addInspiring}
-                            removeInspiring={removeInspiring}
-                            user={user}
-                        />
-                    </Grid.Column>
-                </Grid.Row> 
-        </Grid>
+                        </Grid.Column>
+                    </Grid.Row>
+                    <Grid.Row centered>
+                        <Grid.Column style={{ maxWidth: 300 }}>
+                            <PostFeed
+                                isProfile={true}
+                                posts={posts}
+                                numPhotosCol={3}
+                                addLike={addLike}
+                                removeLike={removeLike}
+                                addInspiring={addInspiring}
+                                removeInspiring={removeInspiring}
+                                user={user}
+                            />
+                        </Grid.Column>
+                    </Grid.Row> 
+            </Grid>
+        )}
+        </>
     )
 }

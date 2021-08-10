@@ -3,7 +3,7 @@ import {Grid, Icon, Segment, Dimmer, Loader, Image} from 'semantic-ui-react';
 import EditCommentForm from '../EditCommentForm/EditCommentForm';
 
 
-export default function CommentLine({comment, post, loading, editComment, deleteComment}){
+export default function CommentLine({comment, post, user, loading, editComment, deleteComment}){
     const [showEditCommentForm, setShowEditCommentForm] = useState(false);
     
     function handleDeleteClick(){
@@ -30,15 +30,18 @@ export default function CommentLine({comment, post, loading, editComment, delete
                     )
                 }
 
+            {
+                user.username === comment.username ? (
+                    <Grid.Column width={3}>
+                        <Icon floated="right" size="small" name={'edit outline'} color="black" onClick={handleEditClick} />
 
-            <Grid.Column width={3}>
-                <Icon floated="right" size="small" name={'edit outline'} color="black" onClick={handleEditClick} />
 
+                        <span>&nbsp;</span>
+                        <Icon floated="right" size="small" name={'delete'} color="black" onClick={handleDeleteClick}/>
 
-                <span>&nbsp;</span>
-                <Icon floated="right" size="small" name={'delete'} color="black" onClick={handleDeleteClick}/>
-
-            </Grid.Column>
+                    </Grid.Column>
+                ) : null
+            }
 
 
         </Grid.Row>

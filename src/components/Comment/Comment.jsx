@@ -4,7 +4,7 @@ import AddCommentForm from '../AddCommentForm/AddCommentForm';
 import CommentLine from '../CommentLine/CommentLine';
 
 
-export default function Comment({ post, loading, handleAddComment, editComment, deleteComment}) {
+export default function Comment({ post, user, loading, handleAddComment, editComment, deleteComment}) {
 
 
 
@@ -21,7 +21,7 @@ export default function Comment({ post, loading, handleAddComment, editComment, 
 
             {post.comments.map((comment)=>{
                 return(
-                    <CommentLine comment={comment} key={comment._id} post={post} loading={loading} editComment={editComment} deleteComment={deleteComment}/>
+                    <CommentLine comment={comment} key={comment._id} post={post} user={user} loading={loading} editComment={editComment} deleteComment={deleteComment}/>
                     );
             })}
 

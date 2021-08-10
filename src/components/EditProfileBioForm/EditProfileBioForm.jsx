@@ -4,7 +4,7 @@ import {Button, Form, Grid, Segment} from 'semantic-ui-react'
 import {useHistory} from 'react-router-dom';
 import userService from '../../utils/userService';
 
-export default function EditProfileBioForm({user}){
+export default function EditProfileBioForm({user, editProfile}){
 
     const [error, setError] = useState('')
     const [selectedFile, setSelectedFile] = useState("")
@@ -32,8 +32,7 @@ export default function EditProfileBioForm({user}){
         formData.append("bio", state.bio);
         console.log(formData);
         try{
-            await userService.updateProfile(user, formData);
-            history.push(`/username/${user.username}`);
+            await editProfile(user, formData);
         } catch (err) {
             console.log(err.message)
             setError(err.message)
@@ -42,7 +41,7 @@ export default function EditProfileBioForm({user}){
     }
 
     return (
-        <Grid textAlign="center" style={{ height:'100vh' }} verticalAlign="middle">
+        <Grid textAlign="center" verticalAlign="middle">
             <Grid.Column style={{ maxWidth: 300 }}>
                 <Segment stacked>
                     <Form autoComplete="off" onSubmit={handleSubmit}>

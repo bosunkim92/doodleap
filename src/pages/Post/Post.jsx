@@ -1,25 +1,27 @@
 import React, {useEffect, useState} from 'react';
 import {useParams} from 'react-router-dom';
 import PostCard from "../../components/PostCard/PostCard";
+import NavBar from "../../components/NavBar/NavBar";
 import * as postsAPI from '../../utils/postsAPI';
 import * as likesAPI from '../../utils/likesAPI';
 import * as inspiringAPI from '../../utils/inspiringAPI';
 import * as commentsAPI from '../../utils/commentsAPI';
-import {Grid} from "semantic-ui-react";
+import {Grid, Segment, Dimmer, Image, Loader} from "semantic-ui-react";
 import {useHistory} from "react-router-dom";
 
 
-export default function Post({ user }) {
+export default function Post({ user, handleLogout }) {
 
     const [post, setPost] = useState([]);
     const postId = useParams().id;
     const [loading, setLoading] = useState(true);
+    const [contentLoading, setContentLoading] = useState(false);
 
 
     const history = useHistory();
 
     async function getPost() {
-        try {
+      try {
             const data= await postsAPI.getOne(postId);
 
             setPost(data.post);
@@ -75,8 +77,11 @@ export default function Post({ user }) {
       console.log(postId);
       console.log(state.content);
       try {
+          setContentLoading(true);
           const data = await postsAPI.updatePost(postId, state);
-          console.log(data, " this is from editing Post");
+          setContentLoading(false);
+          setLoading(true);
+          setLoading(false);
           getPost();
       } catch(err) {
           console.log(err)
@@ -110,7 +115,7 @@ export default function Post({ user }) {
         setLoading(true);
         const data = await commentsAPI.editComment(commentId, input);
         setLoading(false);
-        console.log(data, " this is from editing Post");
+        console.log(data, " this is from editing Comment");
     } catch(err) {
         console.log(err)
     }
@@ -127,15 +132,16 @@ export default function Post({ user }) {
       }
   }
 
-
-
     useEffect(() => {
         getPost();
     }, [loading]);
 
     return (
       <>
-      {loading ? (""):(
+      <NavBar user={user} handleLogout={handleLogout}/>
+      {loading ? (
+        ""
+      ):(
         <Grid textAlign="center" style={{ marginTop: 15, height: '90vh'}}>
           <PostCard
           post={post}
@@ -149,6 +155,7 @@ export default function Post({ user }) {
           editPost={editPost}
           deletePost={deletePost}
           loading={loading}
+          contentLoading={contentLoading}
           handleAddComment={handleAddComment}
           editComment={editComment}
           deleteComment={deleteComment}

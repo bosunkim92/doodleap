@@ -1,12 +1,13 @@
 import React, {useEffect, useState} from 'react'
 import AddPostForm from "../../components/AddPostForm/AddPostForm";
 import PostFeed from "../../components/PostFeed/PostFeed"
+import NavBar from "../../components/NavBar/NavBar"
 import { Grid } from 'semantic-ui-react';
 import * as postsAPI from '../../utils/postsAPI';
 import * as likesAPI from '../../utils/likesAPI';
 import * as inspiringAPI from '../../utils/inspiringAPI';
 
-export default function ArtFeedPage({user}) {
+export default function ArtFeedPage({user, handleLogout}) {
     //ArtFeed page will have sections of the art for sketch, paint, pixel art, drawings
     //May implement anchor url location.href
     //hovering button that contains anchor tag might work
@@ -71,19 +72,16 @@ export default function ArtFeedPage({user}) {
         }
     }
 
-
+    
 
     useEffect(() => {
         getPosts();
     }, []);
 
     return (
+    <>
+        <NavBar user={user} handleLogout={handleLogout} />
         <Grid centered>
-            <Grid.Row>
-                <Grid.Column>
-                    <h2>PageHeader will be here</h2>
-                </Grid.Column>
-            </Grid.Row>
             <Grid.Row>
                 <Grid.Column style={{ maxWidth: 300 }}>
                     <AddPostForm handleAddPost={handleAddPost}/>
@@ -106,5 +104,6 @@ export default function ArtFeedPage({user}) {
                 </Grid.Column>
             </Grid.Row>
         </Grid>
+    </>
     )
 }

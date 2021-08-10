@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import './App.css';
 import SignupPage from '../SignupPage/SignupPage';
@@ -36,16 +36,16 @@ function App() {
           {userService.getUser() ? (
              <Switch>
                 <Route exact path="/">
-                    <HomePage/>
+                    <HomePage user={user} handleLogout={handleLogout}/>
                 </Route>
                 <Route exact path="/art_feed">
-                  <ArtFeedPage user={user}/>
+                  <ArtFeedPage user={user} handleLogout={handleLogout}/>
                 </Route>
                 <Route path="/username/:username">
-                  <ProfilePage user={user}/>
+                  <ProfilePage user={user} handleLogout={handleLogout}/>
                 </Route>
                 <Route path="/posts/:id">
-                  <Post user={user}/>
+                  <Post user={user} handleLogout={handleLogout}/>
                 </Route>
             </Switch>
            ) : (

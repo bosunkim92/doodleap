@@ -68,7 +68,8 @@ async function update(req, res) {
     try{
         const post = await Post.findOne({_id:req.params.id}).populate("user").exec();
         post.content = req.body.content;
-        post.save();
+        await post.save();
+        res.status(200).json({ post });
     } catch(err) {
         console.log(err);
         res.json({ err })
