@@ -1,8 +1,10 @@
 import React, {useState} from 'react';
-import { Card, Icon, Image, Button } from "semantic-ui-react";
+import { Card, Icon, Image, Grid } from "semantic-ui-react";
 import {Link} from 'react-router-dom';
 import * as postsAPI from "../../utils/postsAPI";
 import EditPostForm from "../EditPostForm/EditPostForm";
+import Comment from '../Comment/Comment';
+
 
 export default function PostCard({
     post,
@@ -15,8 +17,11 @@ export default function PostCard({
     user,
     editPost,
     deletePost,
+    loading,
+    handleAddComment,
+    editComment,
+    deleteComment,
 }) {
-
     const [showEditForm, setShowEditForm] = useState(false);
     const liked = post.likes.findIndex(like => like.username === user.username)
 
@@ -38,6 +43,8 @@ export default function PostCard({
         deletePost(post._id);
     }
 
+
+
     return (
 
 
@@ -54,9 +61,6 @@ export default function PostCard({
                             src={post.user.photoUrl[0].photoUrl}
                             />
                         <Card.Header floated="right">{post.user.username}</Card.Header>
-                    
-                    
-                    
                             {isPostView ? (
                                 <>
                                 {user.username === post.user.username ? (
@@ -70,59 +74,58 @@ export default function PostCard({
                                 </>
                             ) : ("")
                             }
-                    
-                    
-                    
                     </Card.Content>
-
-
-
                 </>
             )}
+
+
             {isPostView ? (
                 <>
-                <Image src={`${post.photoUrl}`} wrapped ui={false}/>
+                    <Image src={`${post.photoUrl}`} wrapped ui={false}/>
 
-                {showEditForm === false ? (
+                    {showEditForm === false ? (
 
+                        <Card.Content>
+                            <Card.Description>{post.content}</Card.Description>
+                        </Card.Content>
+
+                    ) : (
+                        <EditPostForm post={post} editPost={editPost}/>
+                    )}
+                </>
+            ) : (
+                <Link to={`/posts/${post._id}`}>
+                    <Image src={`${post.photoUrl}`} wrapped ui={true}/>
                     <Card.Content>
                         <Card.Description>{post.content}</Card.Description>
                     </Card.Content>
-
-                ) : (
-                    <EditPostForm post={post} editPost={editPost}/>
-                )}
-
-
-
-
-                </>
-            ) : (
-            <Link to={`/posts/${post._id}`}>
-
-                <Image src={`${post.photoUrl}`} wrapped ui={true}/>
-                <Card.Content>
-                    <Card.Description>{post.content}</Card.Description>
-                </Card.Content>
-
-            </Link>
+                </Link>
             )}
 
-            <Card.Content extra textAlign={"right"}>
-                <Icon name={"heart"} size="large" color={likeColor} onClick={clickHandlerLike} />
-                {post.likes.length} Likes
-                <Icon name={"idea"} size="large" color={inspiringColor} onClick={clickHandlerInspiring} />
-                {post.inspiring.length} Inspiring
-            </Card.Content>
-            {isPostView ? (
 
             <Card.Content>
-                <h3>Comment </h3>
+                    <Grid>
+                        <Grid.Row>
+                            <Grid.Column width={3} textAlign={'left'}>
+                                <Link to={`/posts/${post._id}`}><Icon name={"comments outline"} size="large" color='grey'/></Link>
+                            </Grid.Column>
+                            <Grid.Column width={13} textAlign={'right'}>
+                                <Icon name={"heart"} size="large" color={likeColor} onClick={clickHandlerLike} />
+                                {post.likes.length} Likes
+                                <Icon name={"idea"} size="large" color={inspiringColor} onClick={clickHandlerInspiring} />
+                                {post.inspiring.length} Inspiring
+                            </Grid.Column>
+                        </Grid.Row>
+                    </Grid>
             </Card.Content>
 
 
+            {isPostView ? (
+                <Card.Content>
+                    <Comment post={post} loading={loading} handleAddComment={handleAddComment} editComment={editComment} deleteComment={deleteComment}/>
+                </Card.Content>
             ) : ("")}
-        </Card>
 
+        </Card>
     )
 }

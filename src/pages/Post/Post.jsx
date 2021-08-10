@@ -4,6 +4,7 @@ import PostCard from "../../components/PostCard/PostCard";
 import * as postsAPI from '../../utils/postsAPI';
 import * as likesAPI from '../../utils/likesAPI';
 import * as inspiringAPI from '../../utils/inspiringAPI';
+import * as commentsAPI from '../../utils/commentsAPI';
 import {Grid} from "semantic-ui-react";
 import {useHistory} from "react-router-dom";
 
@@ -92,6 +93,42 @@ export default function Post({ user }) {
         }
     }
 
+    async function handleAddComment(postId, input) {
+      console.log(postId);
+      setLoading(true);
+      const data = await commentsAPI.create(postId, input);
+      console.log(data)
+      setLoading(()=>false);
+  }
+
+
+
+  async function editComment(commentId, input) {
+    console.log(commentId);
+    console.log(input);
+    try {
+        setLoading(true);
+        const data = await commentsAPI.editComment(commentId, input);
+        setLoading(false);
+        console.log(data, " this is from editing Post");
+    } catch(err) {
+        console.log(err)
+    }
+  }
+
+  async function deleteComment(commentId) {
+      try {
+          setLoading(true);
+          const data = await commentsAPI.deleteComment(commentId);
+          setLoading(false);
+          console.log(data, " this is from deleting post");
+      } catch(err) {
+          console.log(err)
+      }
+  }
+
+
+
     useEffect(() => {
         getPost();
     }, [loading]);
@@ -111,6 +148,10 @@ export default function Post({ user }) {
           isPostView={true}
           editPost={editPost}
           deletePost={deletePost}
+          loading={loading}
+          handleAddComment={handleAddComment}
+          editComment={editComment}
+          deleteComment={deleteComment}
           />
 
         </Grid>
