@@ -3,13 +3,14 @@ import NavBar from "../../components/NavBar/NavBar";
 import HallOfFame from "../../components/HallOfFame/HallOfFame";
 import {Icon} from "semantic-ui-react"
 import {Link} from "react-router-dom";
+import "./HomePage.css";
 
 export default function HomePage({user, handleLogout}){
 
 
 
     return (
-        <>
+        <body>
             <NavBar user={user} handleLogout={handleLogout}/>
             <HallOfFame user={user} />
             <div>
@@ -20,6 +21,6 @@ export default function HomePage({user, handleLogout}){
                     awesome art works!
                 </h3>
             </div>
-        </>
+        </body>
     )
 } 

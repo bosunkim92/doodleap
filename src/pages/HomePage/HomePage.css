@@ -1,0 +1,10 @@
+body {
+    background:
+        linear-gradient(rgb(255, 0, 157), transparent),
+        linear-gradient(to top left, rgb(0, 255, 149), transparent),
+        linear-gradient(to top right, rgb(111, 0, 255), transparent);
+    background-blend-mode: screen;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
