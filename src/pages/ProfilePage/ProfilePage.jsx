@@ -130,7 +130,7 @@ export default function ProfilePage({ user, handleLogout, handleProfileUpdate })
                             <PostFeed
                                 isProfile={true}
                                 posts={posts}
-                                numPhotosCol={3}
+                                numPhotosCol={1}
                                 addLike={addLike}
                                 removeLike={removeLike}
                                 addInspiring={addInspiring}

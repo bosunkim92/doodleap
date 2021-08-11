@@ -5,6 +5,7 @@ import * as postsAPI from "../../utils/postsAPI";
 import EditPostForm from "../EditPostForm/EditPostForm";
 import Comment from '../Comment/Comment';
 import PostContent from "../PostContent/PostContent"
+import "./PostCard.css";
 
 
 export default function PostCard({
@@ -65,7 +66,7 @@ export default function PostCard({
                             avatar
                             src={post.user.photoUrl[0].photoUrl}
                             />
-                        <Card.Header floated="right">{post.user.username}</Card.Header>
+                        <Card.Header className="username" floated="right">{post.user.username}</Card.Header>
                     </Link>
                             {isPostView ? (
                                 <>
@@ -87,7 +88,7 @@ export default function PostCard({
 
             {isPostView ? (
                 <>
-                    <Image src={`${post.photoUrl}`} wrapped ui={false}/>
+                    <Image className="postImgNContent" src={`${post.photoUrl}`} wrapped ui={false}/>
                     {
                         contentLoading ? (
                         <Segment>
@@ -103,8 +104,13 @@ export default function PostCard({
                 </>
             ) : (
                 <Link to={`/posts/${post._id}`}>
-                    <Image src={`${post.photoUrl}`} wrapped ui={true}/>
-                    <PostContent post={post}/>
+                <div className="postImgNContent">
+                    <div>
+                        <Image  src={`${post.photoUrl}`} wrapped ui={true}/>
+                        <PostContent post={post}/>
+
+                    </div>
+                </div>
                 </Link>
             )}
 

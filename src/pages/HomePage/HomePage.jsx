@@ -10,7 +10,7 @@ export default function HomePage({user, handleLogout}){
 
 
     return (
-        <body>
+        <>
             <NavBar user={user} handleLogout={handleLogout}/>
             <HallOfFame user={user} />
             <div>
@@ -21,6 +21,6 @@ export default function HomePage({user, handleLogout}){
                     awesome art works!
                 </h3>
             </div>
-        </body>
+        </>
     )
 } 

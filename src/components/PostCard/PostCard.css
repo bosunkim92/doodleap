@@ -1,0 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Concert+One&family=Palette+Mosaic&display=swap');
+
+.username {
+    font-family: 'Concert One', cursive;
+    color: black;
+    font-size: 20px;
+}
+.postImgNContent {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    color:black;
+}

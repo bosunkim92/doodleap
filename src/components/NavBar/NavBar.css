@@ -1,7 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Palette+Mosaic&display=swap');
+
 .ui.segment {
     background-color: rgba(255, 255, 255, 0.1);
 }
 
 i.icon {
     color: white;
+}
+
+.Logo {
+    font-family: 'Palette Mosaic', cursive;
+    font-size: 40px;
+    color:white;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
 }

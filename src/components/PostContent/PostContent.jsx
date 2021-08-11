@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card } from 'semantic-ui-react';
 import EditPostForm from "../EditPostForm/EditPostForm";
+import './PostContent.css';
 
 export default function PostContent({post, loading, showEditForm, editPost}){
     return (
@@ -10,7 +11,7 @@ export default function PostContent({post, loading, showEditForm, editPost}){
             <EditPostForm post={post} editPost={editPost}/>
 
         ) : (
-            <Card.Content>
+            <Card.Content className="postContent">
                 <Card.Description>{post.content}</Card.Description>
             </Card.Content>
         )}
