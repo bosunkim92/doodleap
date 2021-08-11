@@ -6,6 +6,7 @@ import { Grid } from 'semantic-ui-react';
 import * as postsAPI from '../../utils/postsAPI';
 import * as likesAPI from '../../utils/likesAPI';
 import * as inspiringAPI from '../../utils/inspiringAPI';
+import "./ArtFeedPage.css"
 
 export default function ArtFeedPage({user, handleLogout}) {
     //ArtFeed page will have sections of the art for sketch, paint, pixel art, drawings
@@ -83,12 +84,12 @@ export default function ArtFeedPage({user, handleLogout}) {
         <NavBar user={user} handleLogout={handleLogout} />
         <Grid centered>
             <Grid.Row>
-                <Grid.Column style={{ maxWidth: 300 }}>
+                <Grid.Column className="art_feed_cards">
                     <AddPostForm handleAddPost={handleAddPost}/>
                 </Grid.Column>
             </Grid.Row>
             <Grid.Row>
-                <Grid.Column style={{ maxWidth: 300 }}>
+                <Grid.Column className="art_feed_cards">
                     <PostFeed
                         posts={posts}
                         numPhotosCol={1}

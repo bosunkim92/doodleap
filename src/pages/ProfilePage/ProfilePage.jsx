@@ -9,6 +9,7 @@ import * as likesAPI from "../../utils/likesAPI";
 import * as inspiringAPI from "../../utils/inspiringAPI";
 
 
+
     // profile page will have user's posts and bio info;
     // if the user is the profile owner, then the page will show buttons for edit profile and post, as well as delete posts.
 
@@ -126,11 +127,13 @@ export default function ProfilePage({ user, handleLogout, handleProfileUpdate })
                         </Grid.Column>
                     </Grid.Row>
                     <Grid.Row centered>
-                        <Grid.Column style={{ maxWidth: 300 }}>
+                        <div className="profile_feed_row">
+
+                        <Grid.Column className="profile_feed_cards">
                             <PostFeed
                                 isProfile={true}
                                 posts={posts}
-                                numPhotosCol={1}
+                                numPhotosCol={3}
                                 addLike={addLike}
                                 removeLike={removeLike}
                                 addInspiring={addInspiring}
@@ -138,6 +141,7 @@ export default function ProfilePage({ user, handleLogout, handleProfileUpdate })
                                 user={user}
                             />
                         </Grid.Column>
+                        </div>
                     </Grid.Row> 
             </Grid>
         )}

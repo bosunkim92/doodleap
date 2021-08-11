@@ -27,7 +27,7 @@ export default function PostFeed({
             ) : null}
             {posts.map((post)=>{
                 return(
-                    <PostCard
+                    <PostCard 
                         post={post}
                         key={post._id}
                         isProfile={isProfile}
