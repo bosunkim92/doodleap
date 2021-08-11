@@ -1,8 +1,11 @@
 import React, {useState, useEffect, useRef} from "react"
+import {Image} from 'semantic-ui-react';
 import "./HallOfFame.css";
 
-export default function HallOfFame({user, post}){
+export default function HallOfFame({user, topThree}){
     const colors = ["#0088FE", "#00C49F", "#FFBB28"];
+    const finalist = topThree;
+    
     const delay = 2500;
     
 
@@ -21,7 +24,7 @@ export default function HallOfFame({user, post}){
         timeoutRef.current = setTimeout(
           () =>
             setIndex((prevIndex) =>
-              prevIndex === colors.length - 1 ? 0 : prevIndex + 1
+              prevIndex === finalist.length - 1 ? 0 : prevIndex + 1
             ),
           delay
         );
@@ -33,22 +36,30 @@ export default function HallOfFame({user, post}){
 
 
   return (
+      <>
+      <h2>HALL OF FAME</h2>
+      <h3>: Most beloved art peaces!</h3>
     <div className="slideshow">
       <div
         className="slideshowSlider"
         style={{ transform: `translate3d(${-index * 100}%, 0, 0)` }}
       >
-        {colors.map((backgroundColor, index) => (
-          <div
-            className="slide"
-            key={index}
-            style={{ backgroundColor }}
-          ></div>
-        ))}
-      </div>
+          <Image.Group size="large">
+
+                {finalist.map((post, index) => (
+                <div
+                    className="slide"
+                    key={index}
+                >
+                    <Image src={`${post.photoUrl}`} />
+                </div>
+                ))}
+
+          </Image.Group>
+        </div>
 
       <div className="slideshowDots">
-        {colors.map((_, idx) => (
+        {finalist.map((_, idx) => (
           <div
             key={idx}
             className={`slideshowDot${index === idx ? " active" : ""}`}
@@ -59,5 +70,6 @@ export default function HallOfFame({user, post}){
         ))}
       </div>
     </div>
+    </>
   );
 }
