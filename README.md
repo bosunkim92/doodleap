@@ -1,39 +1,32 @@
-## Setup 
+# DOODLEAP
+<p align="center">
+<img width="400" height="400" src="build/static/media/app_screenshot.png">
+</p>
 
-1. Clone the repo
-2. Rename the folder to your Project, you can use the `mv` command like `mv mern-boilerplate yourprojectname`
-3. Delete the `.git` file, when you are in the root of the file, you can press `ls` and you should see a `.git` file, then go ahead and run `rm -rf .git`
+Individual Post View            |  Posts Page         |        Hall of Fame Page
+:-------------------------:|:-------------------------:|:-------------------------:
+![doodleleap](build/static/media/app_screenshot2.png) |  ![doodleleap](build/static/media/app_screenshot3.png) | ![doodleleap](build/static/media/app_screenshot4.png)
+## Join a community of artists, share your artwork, and get inspired!
+---
 
+Doodleap lets people post pictures of their art and lets them view other peoples art. Users can react to artwork by 'liking' or 'inspiring' the art post. Users can also comment on other users art and provide a short description of their art. The most 'liked' and or 'inspired' work is showcased on the Hall of Fame page.
 
-#### Setup your git repo
+---
+## Tech Stack - MERN
+- MongoDB
+- ExpressJS
+- React
+- NodeJS
 
-1. go to github and create your github and create a repo (Without a readme or liscense you can add that later!)
-2.  Then follow the directions on github that says ```…or create a new repository on the command line```
-
-it should look like this
-
+## Technical Summary
 ```
-git init
-git add .
-git commit -m "first commit"
-git remote add origin git@git.generalassemb.ly:SEI-CC/test.git // this will be whatever your address will be
-git push -u origin master
+Doodleap is a react app built with ExpressJS hosted on Node server via Heroku. The backend is deployed using MongoDB Atlas and connected to the frontend via Mongoose. The photos are hosted on a AWS S3 Bucket.
+
+Doodleap has full CRUD functionality. Users can create, update and delete their posts. Users can also view and react to other users posts.
 ```
-
-#### Setup the App
-
-```npm install```
-
-*DOTENV*
-
-`touch .env`
-
-add your variables
-
-```
-DATABASE_URL=mongodb://localhost:27017/testagramV2
-BUCKET_NAME=catcollectorone
-SECRET=mysecretforjwt
-```
-
-The app is configured, to use those respective key names for the database, jwt secret and aws bucket, of course you'll have your own values
+---
+## Next Steps
+- Doodle feature, allow users to draw directly in the app and post it.
+- Clean up UI more, possibly by working with Bootstrap.
+- Add catagorization through '#`s' i.e. #cat #art #fridayart etc.
+- Thumbnail feature, so links shared outside of Doodleap have a picture and description.
