@@ -56,7 +56,7 @@ export default function PostCard({
                 <>
                     <Card.Content textAlign="left">
                         
-                    <Link to={`/username/${user.username}`}>
+                    <Link to={`/username/${post.user.username}`}>
                         <Image
                             floated='left'
                             size='large'
