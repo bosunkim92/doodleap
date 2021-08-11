@@ -9,7 +9,10 @@ Individual Post View            |  Posts Page         |        Hall of Fame Page
 ## Join a community of artists, share your artwork, and get inspired!
 ---
 
-Doodleap lets people post pictures of their art and lets them view other peoples art. Users can react to artwork by 'liking' or 'inspiring' the art post. Users can also comment on other users art and provide a short description of their art. The most 'liked' and or 'inspired' work is showcased on the Hall of Fame page.
+Doodleap lets people post pictures of their art and lets them view other peoples art. 
+Users can react to artwork by 'liking' or 'inspiring' the art post. Users can also 
+comment on other users art and provide a short description of their art. The most 
+'liked' and or 'inspired' work is showcased on the Hall of Fame page.
 
 ---
 ## Tech Stack - MERN
