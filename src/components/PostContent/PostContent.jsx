@@ -3,7 +3,7 @@ import { Card } from 'semantic-ui-react';
 import EditPostForm from "../EditPostForm/EditPostForm";
 import './PostContent.css';
 
-export default function PostContent({post, loading, showEditForm, editPost}){
+export default function PostContent({post, showEditForm, editPost}){
     return (
         <>
         {showEditForm === true ? (

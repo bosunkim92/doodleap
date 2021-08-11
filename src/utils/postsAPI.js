@@ -13,7 +13,6 @@ export function create(post) {
 }
 
 export function getAll() {
-    console.log("getall function is firing")
     return fetch(BASE_URL, {
         headers: {
             'Authorization': 'Bearer ' + tokenService.getToken()
@@ -22,7 +21,6 @@ export function getAll() {
 }
 
 export function getOne(postID) {
-    console.log("getOne function is firing")
     return fetch(`${BASE_URL}posts/` + postID, {
         headers: {
             'Authorization': 'Bearer ' + tokenService.getToken()
@@ -31,8 +29,6 @@ export function getOne(postID) {
 }
 
 export function updatePost(postID, data) {
-    console.log("updatePost function is firing")
-    console.log(data);
     return fetch(`${BASE_URL}posts/` + postID, {
         method: 'PUT',
         body: JSON.stringify(data),
@@ -40,12 +36,11 @@ export function updatePost(postID, data) {
             "Content-Type": "application/json",
             'Authorization': 'Bearer ' + tokenService.getToken()
         },
-    }).then(res => res.json()).then(result => { console.log('success:', result);
-    }).catch(error => {console.log('Error', error)});
+    }).then(res => res.json()).then(res => { res.json()
+    }).catch(error => {});
 }
 
 export function deletePost(postID) {
-    console.log("deletePost function is firing")
     return fetch(`${BASE_URL}posts/${postID}`, {
         method: 'DELETE',
         headers: {

@@ -15,7 +15,6 @@ module.exports = {
 }
 
 function create(req, res) {
-    console.log(req.file, req.body, "this is create method", req.user);
     try{
         const filePath=`${uuidv4()}/${req.file.originalname}`;
         const params = {
@@ -25,10 +24,8 @@ function create(req, res) {
         };
         s3.upload(params, async function (err, data){
             if(err){
-                console.log(err);
                 res.json({ data: err });
             }
-            console.log(data, ' this data')
             const post = await Post.create({
                 content: req.body.content,
                 user: req.user,
@@ -38,7 +35,6 @@ function create(req, res) {
             res.status(201).json({ post: populatedPost });
         });
     } catch (err) {
-        console.log(err);
         res.json({ err });
     }
 }
@@ -48,7 +44,6 @@ async function index(req, res) {
         const posts = await Post.find({}).populate("user").exec();
         res.status(200).json({ posts });
     } catch (err) {
-        console.log("something went wrong while loading page")
     }
 }
 
@@ -57,21 +52,17 @@ async function show(req, res) {
         const post = await Post.findOne({_id: req.params.id}).populate("user").exec();
         res.status(200).json({ post });
     } catch (err) {
-        console.log("show individual post failed");
+
     }
 }
 
 async function update(req, res) {
-    console.log("update function from the posts.js controller is firing")
-    console.log(req, " this is req")
-    console.log(req.body, "this is update req.body");
     try{
         const post = await Post.findOne({_id:req.params.id}).populate("user").exec();
         post.content = req.body.content;
         await post.save();
         res.status(200).json({ post });
     } catch(err) {
-        console.log(err);
         res.json({ err })
     }
 }

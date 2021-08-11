@@ -9,16 +9,12 @@ import * as inspiringAPI from '../../utils/inspiringAPI';
 import "./ArtFeedPage.css"
 
 export default function ArtFeedPage({user, handleLogout}) {
-    //ArtFeed page will have sections of the art for sketch, paint, pixel art, drawings
-    //May implement anchor url location.href
-    //hovering button that contains anchor tag might work
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(false);
 
     async function handleAddPost(post) {
         setLoading(true)
         const data = await postsAPI.create(post);
-        console.log(data.post, " This is new post", data, " data var");
         setPosts((posts) => [data.post, ...posts]);
         setLoading(false);
     }
@@ -28,19 +24,16 @@ export default function ArtFeedPage({user, handleLogout}) {
             const data= await postsAPI.getAll();
             setPosts([...data.posts]); 
         } catch (err) {
-            console.log(err, " an error has occoured while getting posts");
+
         }
     }
 
-
     async function addLike(postId) {
-        console.log(postId);
         try {
           const data = await likesAPI.create(postId);
-          console.log(data, " this is from addLike");
           getPosts();
         } catch (err) {
-          console.log(err);
+
         }
       }
     
@@ -49,18 +42,16 @@ export default function ArtFeedPage({user, handleLogout}) {
             const data = await likesAPI.removeLike(likeID);
             getPosts();
         } catch (err) {
-            console.log(err);
+
         }
     }
 
     async function addInspiring(postId) {
-        console.log(postId);
         try {
           const data = await inspiringAPI.create(postId);
-          console.log(data, " this is from addInspiring");
           getPosts();
         } catch (err) {
-          console.log(err);
+
         }
       }
     
@@ -69,11 +60,9 @@ export default function ArtFeedPage({user, handleLogout}) {
             const data = await inspiringAPI.removeInspiring(inspiringID);
             getPosts();
         } catch (err) {
-            console.log(err);
+
         }
     }
-
-    
 
     useEffect(() => {
         getPosts();

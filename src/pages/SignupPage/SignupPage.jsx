@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
-
 import userService from '../../utils/userService';
 import { useHistory } from 'react-router-dom';
-
 import {Button, Form, Grid, Header, Segment } from 'semantic-ui-react'
-
 
 export default function SignUpPage(props){
 
@@ -28,26 +25,15 @@ export default function SignUpPage(props){
 
     async function handleSubmit(e){
         e.preventDefault();
-        
-        // const formData = new FormData();
-        // console.log(formData)
-
-        // for (let key in state) {
-        //     formData.append(key, state[key])
-        // }
-
         try{
             await userService.signup(state);
             props.handleSignUpOrLogin()
             history.push('/')
         } catch(err) {
-            console.log('handleSubmit error has occured');
-            console.log(err.message)
             setError(err.message)
         }
     }
  
-    
     return (
 
         <Grid textAlign='center' style={{height:'100vh'}} verticalAlign='middle'>

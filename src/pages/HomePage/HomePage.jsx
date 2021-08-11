@@ -13,9 +13,8 @@ export default function HomePage({user, handleLogout}){
         try{
             const data = await postsAPI.getAll();
             setPosts([...data.posts]);
-            console.log(posts);
         } catch(err) {
-            console.log(err)
+
         }
     }
 
@@ -23,15 +22,11 @@ export default function HomePage({user, handleLogout}){
         getPosts()
     }, [])
 
-
-   const postsArranged = posts.sort(function(a, b){
+    const postsArranged = posts.sort(function(a, b){
         return (b.likes.length + b.inspiring.length) - (a.likes.length + a.inspiring.length);
     })
 
-    console.log(postsArranged);
-
     const topThree = postsArranged.slice(0, 3);
-    console.log(topThree);
 
     return (
         <>

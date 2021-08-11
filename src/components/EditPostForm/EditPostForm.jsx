@@ -1,13 +1,10 @@
 import React, {useState} from "react";
-import {Grid, Form, Button, Segment, Card} from 'semantic-ui-react';
-import {useHistory} from 'react-router-dom';
+import {Form, Button, Card} from 'semantic-ui-react';
 
 export default function EditPostForm({post, editPost}){
     const [state, setState] = useState({
         content: "",
     });
-
-    const history = useHistory();
 
     function handleChange(e) {
         setState({
@@ -18,32 +15,12 @@ export default function EditPostForm({post, editPost}){
 
     function handleSubmit(e){
         e.preventDefault();
-        console.log(e.target);
-        console.log(state);
         try {
             editPost(post._id, state);
         } catch(err) {
-            console.log(err)
+
         }
     }
-
-
-
-        // const formData = new FormData();
-        // formData.append("photo", selectedFile);
-        // formData.append("content", state.content);
-        // props.handleAddPost(formData);
-        // try{
-        //     await userService.signup(state);
-        //     props.handleSignUpOrLogin()
-        //     history.push('/')
-        // } catch(err) {
-        //     console.log('handleSubmit error has occured');
-        //     console.log(err.message)
-        //     setError(err.message)
-        // }
-
-
 
     return (
         <Card.Description>

@@ -9,7 +9,7 @@ export default function Comment({ post, user, loading, handleAddComment, editCom
 
 
     return (
-        <Grid textAlign="center" key={post._id}>
+        <Grid className="post_feed_card" textAlign="center" key={post._id}>
             {loading ? (
                 <Segment>
                     <Dimmer active inverted>

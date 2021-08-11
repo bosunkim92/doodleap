@@ -1,8 +1,6 @@
 import React, {useState} from 'react';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage'
 import {Button, Form, Grid, Segment} from 'semantic-ui-react'
-import {useHistory} from 'react-router-dom';
-import userService from '../../utils/userService';
 
 export default function EditProfileBioForm({user, editProfile}){
 
@@ -11,8 +9,6 @@ export default function EditProfileBioForm({user, editProfile}){
     const [state, setState] = useState({
         bio: "",
     });
-
-    const history = useHistory()
 
     function handleFileInput(e){
         setSelectedFile(e.target.files[0]);
@@ -25,16 +21,14 @@ export default function EditProfileBioForm({user, editProfile}){
     }
     async function handleSubmit(e){
         e.preventDefault();
-        console.log(state)
-        console.log(selectedFile);
+
         var formData = new FormData();
         formData.append("photo", selectedFile);
         formData.append("bio", state.bio);
-        console.log(formData);
+
         try{
             await editProfile(user, formData);
         } catch (err) {
-            console.log(err.message)
             setError(err.message)
         }
         

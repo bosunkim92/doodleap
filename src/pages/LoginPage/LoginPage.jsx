@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import './LoginPage.css';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage'
 import userService from '../../utils/userService';
 import {Button, Form, Grid, Header, Message, Segment} from 'semantic-ui-react';

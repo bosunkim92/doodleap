@@ -1,8 +1,6 @@
 import React, {useState} from 'react';
 import { Card, Icon, Image, Grid, Segment, Dimmer, Loader } from "semantic-ui-react";
 import {Link} from 'react-router-dom';
-import * as postsAPI from "../../utils/postsAPI";
-import EditPostForm from "../EditPostForm/EditPostForm";
 import Comment from '../Comment/Comment';
 import PostContent from "../PostContent/PostContent"
 import "./PostCard.css";
@@ -38,7 +36,6 @@ export default function PostCard({
     const inspiringColor = inspired > -1 ? 'red' : 'grey'
 
     function handleEditClick() {
-        console.log('this will be edit function')
         showEditForm === false ? setShowEditForm(() => true) : setShowEditForm(() => false);
     }
     
@@ -51,7 +48,7 @@ export default function PostCard({
     return (
         <>
 
-        <Card key={post._id}>
+        <Card key={post._id} className="post_feed_card">
 
             {isProfile ? (
                 ""

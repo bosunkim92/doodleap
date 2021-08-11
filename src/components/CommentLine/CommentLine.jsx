@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Grid, Icon, Segment, Dimmer, Loader, Image} from 'semantic-ui-react';
+import {Grid, Icon} from 'semantic-ui-react';
 import EditCommentForm from '../EditCommentForm/EditCommentForm';
 
 

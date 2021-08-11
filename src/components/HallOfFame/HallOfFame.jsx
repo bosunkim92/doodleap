@@ -2,8 +2,7 @@ import React, {useState, useEffect, useRef} from "react"
 import {Image} from 'semantic-ui-react';
 import "./HallOfFame.css";
 
-export default function HallOfFame({user, topThree}){
-    const colors = ["#0088FE", "#00C49F", "#FFBB28"];
+export default function HallOfFame({topThree}){
     const finalist = topThree;
     
     const delay = 2500;

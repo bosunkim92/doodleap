@@ -3,9 +3,6 @@ import {Grid, Form, Button} from 'semantic-ui-react';
 
 export default function EditCommentForm({comment, editComment}){
 
-    console.log(comment)
-    console.log(comment._id);
-
     const [state, setState] = useState({
         commentContent: "",
     });
