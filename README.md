@@ -1,4 +1,4 @@
-# DOODLEAP
+# [DOODLEAP](https://doodleap.herokuapp.com/) 
 <p align="center">
 <img width="400" height="400" src="build/static/media/app_screenshot.png">
 </p>
@@ -30,3 +30,6 @@ Doodleap has full CRUD functionality. Users can create, update and delete their 
 - Clean up UI more, possibly by working with Bootstrap.
 - Add catagorization through '#`s' i.e. #cat #art #fridayart etc.
 - Thumbnail feature, so links shared outside of Doodleap have a picture and description.
+
+
+#### Link to the deployed app: [DOODLEAP](https://doodleap.herokuapp.com/) 
